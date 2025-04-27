@@ -1,0 +1,170 @@
+{% extends "myapp/layout/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-uppercase fw-bold text-dark fs-3 mb-4">Thông Tin Cá Nhân</h1>
+    <p class="text-center text-muted mb-5">Phiên bản v1</p>
+    
+    <div class="row justify-content-center">
+        <!-- Avatar Section -->
+        <div class="col-md-4 text-center">
+            <div class="card h-100 bg-dark text-light p-4 border-0 shadow-sm">
+                <div class="position-relative d-inline-block mb-3">
+                    <img 
+                        id="avatar-preview" 
+                        src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'myapp/img/slide3.jpg' %}{% endif %}" 
+                        alt="Avatar" 
+                        class="img-fluid rounded-circle border border-3 border-white shadow"
+                        style="width: 150px; height: 150px; object-fit: cover;"
+                    >
+                    <span class="position-absolute bottom-0 end-0 bg-success rounded-circle p-2 border border-white"></span>
+                </div>
+                
+                <!-- Form to change avatar -->
+                <form id="avatar-form" enctype="multipart/form-data" class="mb-3">
+                    <label for="avatar-input" class="btn btn-outline-light btn-sm w-100 py-2">
+                        <i class="fas fa-camera me-2"></i>Đổi Avatar
+                    </label>
+                    <input 
+                        type="file" 
+                        id="avatar-input" 
+                        name="avatar" 
+                        accept="image/*" 
+                        class="d-none" 
+                        onchange="previewAvatar(event)"
+                    >
+                </form>
+
+                <a href="{% url 'login' %}" class="text-decoration-none">
+                    <button class="btn btn-danger w-100 fw-bold py-2 transition-all hover-scale">
+                        <i class="fas fa-sign-out-alt me-2"></i>Đăng Xuất
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Profile Details -->
+        <div class="col-md-6">
+            <div class="card bg-secondary p-4 shadow-lg">
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-light">Fullname:</label>
+                    <div class="d-flex justify-content-between align-items-center bg-dark p-2 rounded">
+                        <input 
+                            type="text" 
+                            id="fullname" 
+                            class="form-control bg-dark text-light border-0" 
+                            value="{{ user.fullname|default:'Chưa cập nhật' }}" 
+                            disabled
+                        >
+                        <button id="edit-fullname" class="btn btn-sm btn-outline-light">✏️</button>
+                    </div>
+                    <button id="save-fullname" class="btn btn-success mt-2 w-100 d-none">💾 Lưu</button>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-light">Email:</label>
+                    <div class="d-flex justify-content-between align-items-center bg-dark p-2 rounded">
+                        <span id="email" class="text-light">{{ user.email }}</span>
+                        <button class="btn btn-sm btn-outline-light">✏️</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-light">Password:</label>
+                    <div class="d-flex justify-content-between align-items-center bg-dark p-2 rounded">
+                        <span id="password" class="text-light">******</span>
+                        <button class="btn btn-sm btn-outline-light">✏️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for handling avatar preview and upload -->
+<script>
+    // Preview avatar before upload
+    function previewAvatar(event) {
+        const input = event.target;
+        const preview = document.getElementById('avatar-preview');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+            
+            // Automatically upload after selecting file
+            uploadAvatar();
+        }
+    }
+
+    // Upload avatar to server
+    function uploadAvatar() {
+        const form = document.getElementById('avatar-form');
+        const formData = new FormData(form);
+
+        fetch("{% url 'profile' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Đổi avatar thành công!");
+                document.getElementById('avatar-preview').src = data.avatar_url;
+            } else {
+                alert("Đổi avatar thất bại!");
+            }
+        })
+        .catch(error => {
+            alert("Lỗi kết nối đến server!");
+            console.error(error);
+        });
+    }
+
+    // Handle fullname edit (existing functionality)
+    document.getElementById("edit-fullname").addEventListener("click", function() {
+        let fullnameInput = document.getElementById("fullname");
+        let saveBtn = document.getElementById("save-fullname");
+    
+        fullnameInput.removeAttribute("disabled");
+        fullnameInput.focus();
+        saveBtn.classList.remove("d-none");  // Hiện nút Lưu
+    });
+    
+    document.getElementById("save-fullname").addEventListener("click", function() {
+        let fullnameInput = document.getElementById("fullname");
+        let saveBtn = document.getElementById("save-fullname");
+        let newFullname = fullnameInput.value;
+    
+        fetch("{% url 'update_fullname' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({ fullname: newFullname })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Cập nhật thành công!");
+                fullnameInput.setAttribute("disabled", "true");
+                saveBtn.classList.add("d-none");  // Ẩn nút Lưu
+            } else {
+                alert("Cập nhật thất bại: " + data.error);
+            }
+        })
+        .catch(error => {
+            alert("Lỗi kết nối đến server!");
+            console.error(error);
+        });
+    });
+</script>
+
+{% include 'myapp/layout/footer.html' %}
+{% endblock %}

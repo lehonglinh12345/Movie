@@ -1,0 +1,163 @@
+{% load static %}
+<style>
+.carousel-bg {
+  background-color: #2d2d2d;
+  padding: 40px 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  margin: 40px 0;
+}
+
+.carousel-container {
+  margin: 20px 0;
+}
+
+.carousel-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.carousel-wrapper {
+  display: flex;
+  flex-wrap: wrap;  /* Cho phép các phần tử gói vào dòng mới nếu cần */
+  gap: 24px;
+  justify-content: flex-start;
+}
+
+.movie-item {
+  flex: 0 0 calc(50% - 12px); /* Chia đều mỗi item 50% chiều rộng */
+  max-width: calc(100% - 12px);
+  margin-bottom: 12px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #1f2937;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.movie-item:nth-child(1) {
+  background-color: #374151;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.movie-thumbnail {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+}
+
+.movie-info {
+  padding: 12px;
+  color: #d1d5db;
+}
+
+.movie-info h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.movie-info p {
+  font-size: 0.75rem;
+  margin-bottom: 2px;
+}
+
+.movie-info a {
+  margin-top: 6px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+}
+
+.movie-item:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.movie-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.movie-thumbnail:hover img {
+  opacity: 0.15;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  padding: 10px;
+}
+
+.movie-thumbnail:hover .video-overlay {
+  display: flex;
+}
+
+.movie-info {
+ 
+  padding: 25px;
+  color:rgb(152, 152, 152);
+}
+
+.movie-info a:hover {
+  background-color: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .movie-item {
+      flex: 0 0 100%; /* Mỗi item chiếm 100% chiều rộng trên màn hình nhỏ */
+  }
+
+  .movie-thumbnail {
+      height: 160px;
+  }
+}
+</style>
+
+
+<h2 class="carousel-title">🎬 Có thể bạn sẽ thích</h2>
+<div class="carousel-container">
+  <div class="carousel-wrapper" id="movie-carousel">
+    {% for movie in recommended_movies|slice:":5" %}
+    <div class="movie-item">
+      {% if movie.maphim %}
+      <a href="{% url 'chitietphim' maphim=movie.maphim %}">
+    {% endif %}
+    
+        <div class="movie-thumbnail">
+          {% if movie.anh_bia %}
+            <img src="{{ movie.anh_bia.url }}" alt="{{ movie.ten_phim }}" loading="lazy">
+          {% else %}
+            <img src="{% static 'images/default_poster.jpg' %}" alt="Poster mặc định" loading="lazy">
+          {% endif %}
+          {% if movie.video_url %}
+          <div class="video-overlay">
+            <iframe loading="lazy" width="100%" height="100%" class="rounded"
+              src="https://www.youtube.com/embed/{{ movie.video_url|slice:'17:' }}"
+              frameborder="0" allowfullscreen></iframe>
+          </div>
+          {% endif %}
+        </div>
+    
+      <div class="movie-info">
+        <h4>{{ movie.ten_phim }}</h4>
+        <p>
+          {% if movie.ngay_phat_hanh %}📅 {{ movie.ngay_phat_hanh }}{% endif %}
+          {% if movie.thoi_luong %} | ⏳ {{ movie.thoi_luong }} phút{% endif %}
+        </p>  </a>
+        <a href="{% url 'chitietphim' maphim=movie.maphim %}">Xem ngay</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+

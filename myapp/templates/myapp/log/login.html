@@ -1,0 +1,119 @@
+{% extends "myapp/layout/base.html" %}
+{% load static %}
+{% load socialaccount %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+    <div class="card shadow-lg border-0" style="max-width: 420px; width: 100%; border-radius: 20px; overflow: hidden;">
+        <!-- Header với gradient -->
+        <div class="card-header bg-gradient-primary text-white text-center py-4">
+            <h2 class="mb-0 fw-bold">Đăng Nhập</h2>
+            <p class="text-white-50 mt-1">HELLO!</p>
+        </div>
+
+        <!-- Body của card -->
+        <div class="card-body p-4">
+            <!-- Thông báo lỗi -->
+            {% if messages %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {% for message in messages %}
+                        <span>{{ message }}</span>
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+            <!-- Form đăng nhập -->
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="mb-4 position-relative">
+                    <label for="email" class="form-label fw-semibold">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light"><i class="fas fa-envelope"></i></span>
+                        <input type="email" name="email" class="form-control" value="{{ email }}" 
+                               placeholder="nhap@email.com" required>
+                    </div>
+                    <div class="invalid-feedback">Vui lòng nhập email hợp lệ.</div>
+                </div>
+
+                <div class="mb-4 position-relative">
+                    <label for="password" class="form-label fw-semibold">Mật khẩu</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light"><i class="fas fa-lock"></i></span>
+                        <input type="password" name="password" class="form-control" value="{{ password }}" 
+                               placeholder="••••••••" required>
+                    </div>
+                    <div class="invalid-feedback">Vui lòng nhập mật khẩu.</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm 
+                        hover-scale" style="transition: transform 0.2s;">
+                    Đăng Nhập
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="d-flex align-items-center my-4">
+                <hr class="flex-grow-1"> 
+                <span class="px-2 text-muted">Hoặc</span> 
+                <hr class="flex-grow-1">
+            </div>
+
+            <!-- Đăng nhập Google -->
+            <a href="{% provider_login_url 'google' %}?next=/" 
+               class="btn btn-outline-danger w-100 py-2 fw-semibold shadow-sm hover-scale d-flex align-items-center justify-content-center gap-2"
+               style="transition: transform 0.2s;">
+                <i class="fab fa-google"></i> Đăng nhập với Google
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="card-footer text-center py-3 bg-light">
+            <small class="text-muted">Chưa có tài khoản? 
+                <a href="#" class="text-primary fw-semibold text-decoration-none">Đăng ký ngay</a>
+            </small>
+        </div>
+    </div>
+</div>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- CSS tùy chỉnh -->
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+    }
+    .hover-scale:hover {
+        transform: scale(1.02);
+    }
+    .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        border-color: #007bff;
+    }
+    .input-group-text {
+        border-right: none;
+    }
+    .form-control {
+        border-left: none;
+    }
+</style>
+
+<!-- JavaScript cho validation -->
+<script>
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+
+{% endblock %}

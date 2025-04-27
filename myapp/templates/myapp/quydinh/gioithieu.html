@@ -1,0 +1,115 @@
+{% extends 'myapp/layout/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="relative container mx-auto py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <!-- Background Gradient with Sakura Particles -->
+    <div class="absolute inset-0 bg-gradient-to-br from-pink-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-950 dark:to-purple-950 opacity-80"></div>
+    <div class="absolute inset-0 sakura-particles pointer-events-none"></div>
+
+    <!-- Header Section -->
+    <div class="relative text-center mb-20">
+        <h2 class="text-4xl sm:text-5xl  lg:text-6xl font-extrabold text-gray-900 dark:text-white animate-fade-in drop-shadow-xl">
+            Hành Trình Vào Vũ Trụ Anime
+        </h2>
+        <div class="mt-4 h-2 w-40 bg-gradient-to-r from-pink-500 to-blue-500 mx-auto rounded-full"></div>
+        <p class="mt-6 text-xl sm:text-2xl text-gray-600 dark:text-gray-100 font-medium animate-fade-in animation-delay-200">
+            Sống trọn từng khoảnh khắc với những câu chuyện anime đầy cảm xúc!
+        </p>
+    </div>
+
+    <!-- Content Section -->
+    <div class="relative max-w-6xl mx-auto">
+        <div class="grid gap-12 sm:grid-cols-2 items-center">
+            <!-- Text Content -->
+            <div class="space-y-8 animate-slide-up">
+                <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-100 leading-relaxed">
+                    Chào mừng bạn đến với <span class="font-semibold text-pink-500 dark:text-pink-300">thiên đường anime</span>! Anime không chỉ là hoạt hình – đó là một thế giới đầy màu sắc, cảm xúc và ý nghĩa. Từ những câu chuyện phiêu lưu kỳ ảo đến những lát cắt đời thường chân thật, mỗi bộ anime là một hành trình riêng khiến bạn cười, khóc và rung động. Hãy cùng bước vào vũ trụ anime – nơi trí tưởng tượng không có giới hạn
+                </p>
+                <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-100 leading-relaxed">
+                    Được tạo nên bởi đội ngũ sinh viên <span class="font-semibold text-blue-500 dark:text-blue-300">Đại học KTCN Cần Thơ</span>, đây là món quà đong đầy đam mê dành cho cộng đồng otaku Việt.
+                </p>
+            </div>
+            <!-- Image Placeholder -->
+            <div class="relative animate-slide-up animation-delay-200">
+                <img src="{% static 'myapp/img/logo.jpg' %}" 
+                     alt="Anime Hero Banner" 
+                     title="Anime Adventure"
+                     class="rounded-3xl shadow-2xl object-cover w-full h-80 sm:h-[28rem] transform hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-pink-500/30 to-transparent rounded-3xl"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mini Carousel Section -->
+    {% comment %} {% for movie in phim_hay_nhat %}
+    <div class="swiper-slide bg-zinc-800 rounded-xl overflow-hidden shadow-md hover:scale-105 transition duration-300">
+        <a href="{% url 'chitietphim' maphim=movie.maphim %}">
+            <div class="movie-thumbnail">
+                <img src="{{ movie.anh_biau_url }}" alt="{{ movie.ten_phim }}">
+                <div class="video-overlay">
+                    {% if movie.video_url %}
+                        <iframe width="100%" height="100%" class="rounded"
+                            src="https://www.youtube.com/embed/{{ movie.video_url|slice:'17:' }}"
+                            frameborder="0" allowfullscreen></iframe>
+                    {% else %}
+                        <p class="text-white font-bold">Video không khả dụng.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="p-4">
+                <h4 class="text-lg font-semibold">{{ movie.ten_phim }}</h4>
+            </div>
+        </a>
+    </div>
+{% endfor %} {% endcomment %}
+    </div>
+
+    <!-- Call to Action Button -->
+    <div class="relative text-center mt-16">
+        <a href="{% url 'home' %}" 
+           class="inline-block bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold px-12 py-4 rounded-full hover:from-pink-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-110 shadow-xl hover:shadow-pink-500/50 text-lg">
+            Bắt Đầu Cuộc Phiêu Lưu Anime
+        </a>
+    </div>
+</section>
+
+<!-- Custom Styles -->
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+        animation: fadeIn 1.4s ease-out;
+    }
+    .animate-slide-up {
+        animation: slideUp 1.2s ease-out;
+    }
+    .animation-delay-200 {
+        animation-delay: 0.2s;
+    }
+    .animation-delay-400 {
+        animation-delay: 0.4s;
+    }
+
+    /* Sakura Particles */
+    .sakura-particles {
+        background-image: url("{% static 'myapp/img/sakura.png' %}");
+        background-size: 20px;
+        animation: sakuraFall 10s linear infinite;
+        opacity: 0.5;
+    }
+    @keyframes sakuraFall {
+        0% { transform: translateY(-100vh) rotate(0deg); }
+        100% { transform: translateY(100vh) rotate(360deg); }
+    }
+</style>
+
+<!-- Footer -->
+{% include 'myapp/layout/footer.html' %}
+{% endblock %}

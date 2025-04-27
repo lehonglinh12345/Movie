@@ -1,0 +1,88 @@
+{% extends 'myapp/layout/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  :root {
+    --primary-color: #2563eb;
+    --secondary-color: #1f2937;
+    --text-color: #111827;
+    --accent-color: #f3f4f6;
+  }
+
+  .movie-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .movie-card img {
+    transition: transform 0.3s ease;
+  }
+
+  .movie-card:hover img {
+    transform: scale(1.05);
+  }
+
+  .cta-button {
+    background: var(--primary-color);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+  }
+
+  .empty-state {
+    background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+<div class="container mx-auto px-4 py-12 max-w-7xl">
+  <h3 class="text-3xl font-bold text-gray-800 mb-8 tracking-tight">Lịch sử xem phim</h3>
+
+  {% if lich_su %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {% for item in lich_su %}
+    <div class="movie-card bg-white rounded-xl overflow-hidden shadow-lg">
+      <div class="relative">
+        <img src="{{ item.phim.anh_bia_url }}" alt="Poster phim {{ item.phim.ten_phim }}" class="w-full h-48 object-cover" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute bottom-2 right-2 text-xs text-white bg-gray-900/70 px-2 py-1 rounded">
+          {{ item.thoi_gian_bat_dau|date:"d/m/Y" }}
+        </div>
+      </div>
+      <div class="p-5">
+        <h5 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-1" title="{{ item.phim.ten_phim }}">
+          {{ item.phim.ten_phim }}
+        </h5>
+        <p class="text-sm text-gray-600 mb-4">
+          Đã xem: {{ item.thoi_gian_bat_dau|date:"d/m/Y H:i" }}
+        </p>
+        <a href="{% url 'chitietphim' item.phim.maphim %}" class="cta-button inline-block text-white px-4 py-2 rounded-lg text-sm font-medium">
+          Xem lại
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state text-center py-16">
+    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16" />
+    </svg>
+    <p class="text-lg text-gray-600 mt-4">Bạn chưa xem phim nào.</p>
+    <a href="{% url 'home' %}" class="cta-button mt-6 inline-block text-white px-6 py-3 rounded-lg text-sm font-medium">
+      Khám phá phim ngay
+    </a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

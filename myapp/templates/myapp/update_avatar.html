@@ -1,0 +1,15 @@
+{% extends "myapp/layout/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-uppercase fw-bold text-darkb fs-3">Cập nhật Ảnh Đại Diện</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="avatar" class="form-label">Chọn ảnh đại diện:</label>
+            {{ form.avatar }}
+        </div>
+        <button type="submit" class="btn btn-success">Lưu Avatar</button>
+    </form>
+</div>
+{% endblock %}

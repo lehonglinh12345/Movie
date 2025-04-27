@@ -1,0 +1,132 @@
+{% extends "myapp/layout/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .movie-card {
+        background-color: #27272a;
+        border-radius: 1rem;
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .movie-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .movie-thumbnail {
+        height: 280px;
+        overflow: hidden;
+    }
+
+    .movie-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .movie-thumbnail:hover img {
+        opacity: 0.2;
+    }
+
+    .video-overlay {
+        position: absolute;
+        inset: 0;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.85);
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        z-index: 10;
+    }
+
+    .movie-thumbnail:hover .video-overlay {
+        display: flex;
+    }
+
+    .movie-body {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .movie-title {
+        font-weight: 600;
+        color: #f4f4f5;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .movie-desc {
+        font-size: 0.9rem;
+        color: #a1a1aa;
+    }
+
+    .search-heading {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #facc15;
+    }
+
+    .search-subheading {
+        color: #e5e7eb;
+        font-style: italic;
+        margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .movie-thumbnail {
+            height: 200px;
+        }
+    }
+    .search-heading {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #facc15;
+        margin-bottom: 0.5rem; 
+    }
+
+    .search-subheading {
+        color: #e5e7eb;
+        font-style: italic;
+        margin-bottom: 2rem; 
+    }
+</style>
+
+<div class="bg-zinc-900 min-h-screen px-4 py-10">
+    <div class="container mx-auto">
+        <h2 class="search-heading">Kết quả tìm kiếm cho: "{{ query }}"</h2>
+       
+
+        {% if movies %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for movie in movies %}
+            <a href="{% url 'chitietphim' maphim=movie.maphim %}" class="block">
+                <div class="movie-card shadow-lg relative">
+                    <div class="movie-thumbnail relative">
+                        <img src="{{ movie.anh_bia_url }}" alt="{{ movie.ten_phim }}">
+                        <div class="video-overlay absolute top-0 left-0 w-full h-full rounded">
+                            {% if movie.video_url %}
+                                <iframe width="100%" height="100%" class="rounded"
+                                    src="https://www.youtube.com/embed/{{ movie.video_url|slice:'17:' }}"
+                                    frameborder="0" allowfullscreen></iframe>
+                            {% else %}
+                                <p class="text-white font-bold">Video không khả dụng.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="movie-body">
+                        <h5 class="movie-title">{{ movie.ten_phim }}</h5>
+                        <p class="movie-desc">{{ movie.mo_ta|truncatechars:90 }}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-red-500 font-semibold mt-6">Không tìm thấy kết quả.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

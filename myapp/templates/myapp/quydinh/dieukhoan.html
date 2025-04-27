@@ -1,0 +1,81 @@
+
+
+{% extends "myapp/layout/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="bg-slate-800 text-white p-5 rounded-4 shadow-xl">
+        <h1 class="text-center fw-bold mb-5 text-primary"style="font-size:40px" >Điều Khoản Sử Dụng</h1>
+
+        <div class="mb-5">
+            <h3 class="fw-bold mb-3  fs-3 d-flex align-items-center">
+                <span class="bg-success me-2" style="width: 4px; height: 28px;"></span>
+                Về Vai Trò Là Nguồn Truy Cập Website
+            </h3>
+            <p class="text-gray-300">
+                Tất cả nội dung trên <strong>MOVIE STREAMING</strong> được cung cấp không giới hạn truy cập cho cả nguồn dùng, nhưng không phải là nguồn cung cấp chính thức của website. Chúng tôi chỉ đóng vai trò là một nền tảng trung gian, tổng hợp và cung cấp các nội dung từ nhiều nguồn khác nhau để người dùng có thể dễ dàng tiếp cận.
+            </p>
+            <p class="text-gray-300">
+                MOVIE STREAMING không lưu trữ hoặc sở hữu bất kỳ nội dung nào được hiển thị trên website. Các nội dung này có thể đến từ các bên thứ ba và chúng tôi không chịu trách nhiệm về tính chính xác, hợp pháp hoặc chất lượng của chúng.
+            </p>
+        </div>
+
+        <div class="mb-5">
+            <h3 class="fw-bold mb-3 fs-3 d-flex align-items-center">
+                <span class="bg-success me-2" style="width: 4px; height: 28px;"></span>
+                Chịu Trách Nhiệm Về Nội Dung
+            </h3>
+            <p class="text-gray-300">
+                MOVIE STREAMING không chịu trách nhiệm về bất kỳ điều gì xảy ra liên quan đến cảm xúc, trải nghiệm hoặc tác động tâm lý của bạn khi xem các nội dung trên website này. Một số danh mục phim có thể mang lại cảm giác vui vẻ, xúc động, hoặc gây khó chịu, tùy thuộc vào sở thích và cảm nhận cá nhân của từng người dùng.
+            </p>
+            <p class="text-gray-300">
+                Lưu ý rằng một số nội dung phim có thể chứa các yếu tố bạo lực, nhạy cảm hoặc không phù hợp với mọi lứa tuổi. Chúng tôi khuyến nghị người dùng dưới 18 tuổi cần có sự đồng ý của phụ huynh hoặc người giám hộ trước khi xem các nội dung này. MOVIE STREAMING sẽ không chịu trách nhiệm nếu người dùng vi phạm quy định về độ tuổi.
+            </p>
+            <p class="text-gray-300">
+                Các nền tảng như GOOGLE hoặc Youtube không chịu trách nhiệm hoặc bảo trợ cho các nội dung được hiển
+
+ thị trên website này. MOVIE STREAMING hoạt động độc lập và không liên kết trực tiếp với các nền tảng trên.
+            </p>
+        </div>
+
+        <div class="mb-5">
+            <h3 class="fw-bold mb-3 fs-3 d-flex align-items-center">
+                <span class="bg-success me-2" style="width: 4px; height: 28px;"></span>
+                Chân Quyền Truy Cập Ở Một Số Quốc Gia
+            </h3>
+            <p class="text-gray-300">
+                Trong một số trường hợp, MOVIE STREAMING có thể thực hiện việc cấm quyền truy cập website đối với người dùng từ một số quốc gia không đồng ý hoặc không tuân thủ các điều kiện và điều khoản hoạt động của website này. Quyết định này có thể được áp dụng để tuân thủ các quy định pháp luật hoặc chính sách nội bộ.
+            </p>
+            <p class="text-gray-300">
+                Chúng tôi không đảm bảo rằng tất cả nội dung trên website sẽ khả dụng ở mọi quốc gia. Một số nội dung có thể bị giới hạn do các quy định pháp lý hoặc hạn chế bản quyền tại khu vực của bạn.
+            </p>
+        </div>
+
+        <div class="mb-5">
+            <h3 class="fw-bold mb-3 d-flex fs-3 align-items-center">
+                <span class="bg-success me-2" style="width: 4px; height: 28px;"></span>
+                Quyền và Nghĩa Vụ của Người Dùng
+            </h3>
+            <p class="text-gray-300">
+                Khi sử dụng MOVIE STREAMING, bạn đồng ý không sử dụng nội dung trên website cho các mục đích bất hợp pháp, bao gồm nhưng không giới hạn ở việc sao chép, phân phối hoặc sử dụng nội dung mà không có sự cho phép của chủ sở hữu bản quyền.
+            </p>
+            <p class="text-gray-300">
+                Người dùng có trách nhiệm tự bảo vệ thông tin cá nhân và thiết bị của mình khi truy cập website. MOVIE STREAMING không chịu trách nhiệm cho bất kỳ thiệt hại nào phát sinh từ việc sử dụng website, bao gồm nhưng không giới hạn ở virus, phần mềm độc hại hoặc mất dữ liệu.
+            </p>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'home' %}" class="btn btn-outline-primary rounded-pill px-5 py-2 fw-medium">
+                Quay lại Trang Chủ
+            </a>
+        </div>
+    </div>
+</div>
+
+{% include 'myapp/layout/footer.html' %}
+
+
+{% endblock %}
+
+

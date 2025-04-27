@@ -1,0 +1,33 @@
+<h1 class="text-white fw-bold fs-2 mb-4">PHIM SẮP CHIẾU</h1>
+
+<div class="container">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Phim Sắp Chiếu</title>
+</head>
+<body>
+    <h1>Phim Sắp Chiếu</h1>
+    <div>
+        {% for movie in movies %}
+            <div>
+                <h3>{{ movie.ten_phim }}</h3>
+                <p>Ngày phát hành: {{ movie.ngay_phat_hanh }}</p>
+                <p>{{ movie.mo_ta }}</p>
+                {% if movie.get_trailer_url %}
+                    <iframe width="560" height="315" src="{{ movie.get_trailer_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {% else %}
+                    <p>Trailer không có sẵn</p>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>Hiện tại không có phim sắp chiếu.</p>
+        {% endfor %}
+    </div>
+</body>
+
+
+
+      
+    </div>
+</div>

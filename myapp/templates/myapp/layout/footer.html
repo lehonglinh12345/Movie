@@ -1,0 +1,78 @@
+{% load static %}
+<!-- Footer -->
+<footer class="bg-gray-700   text-white py-5 mt-5">
+    <div class="container bg-gray-700">
+        <div class="row">
+            <!-- Logo và Tên Website -->
+            <div class="col-md-3 text-center text-md-start mb-4 mb-md-0">
+                <a href="{% url 'home' %}" > <img src="{% static 'myapp/img/logo.jpg' %}" alt="Movie Streaming Logo" 
+                title="linh vật web tôi" class="logo hover:scale-105" 
+                style="height: 70px; margin-right: 10px; border-radius: 15px;">
+                <h4 class="fw-bold text-primary mb-3">MOVIE STREAMING</h4>
+                <p class="text-gray-400">Xem phim chất lượng cao</p>
+            </div></a>
+
+            <!-- Liên Hệ -->
+            <div class="col-md-3 text-center text-md-start mb-4 mb-md-0">
+                <h5 class="fw-bold text-white mb-3">Liên Hệ</h5>    
+                <ul class="list-unstyled text-gray-400">
+                    <li class="mb-2">
+                        <a href="mailto:banhdaucuongon@gmail.com" class="text-gray-400 hover:text-primary text-decoration-none">
+                            <i class="fas fa-envelope me-2"></i> lhlinhktpm2211061@student.ctuet.edu.vn
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-gray-400 hover:text-primary text-decoration-none">
+                            <i class="fas fa-globe me-2"></i> linh123
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-gray-400 hover:text-primary text-decoration-none">
+                            <i class="fas fa-globe me-2"></i> vy123
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Hỗ Trợ -->
+            <div class="col-md-3 text-center text-md-start mb-4 mb-md-0">
+                <h5 class="fw-bold text-white mb-3">Hỗ Trợ</h5>
+                <ul class="list-unstyled text-gray-400">
+                    <li class="mb-2">
+                        <a href="#" class="text-gray-400 hover:text-primary text-decoration-none">
+                            <i class="fas fa-headset me-2"></i> Hỗ trợ quảng cáo
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="{% url 'dieukhoan' %}" class="text-gray-400 hover:text-primary text-decoration-none">
+                            <i class="fas fa-file-alt me-2"></i> Điều khoản sử dụng
+                        </a>
+                    </li>
+                    {% comment %} <li>
+                        <a href="#" class="text-gray-400 hover:text-primary text-decoration-none">
+                            <i class="fas fa-shield-alt me-2"></i> Quyền riêng tư
+                        </a>
+                    </li> {% endcomment %}
+                </ul>
+            </div>
+
+            <!-- Quy Định và Ngôn Ngữ -->
+            <div class="col-md-3 text-center text-md-start">
+                <h5 class="fw-bold text-white mb-3">Ngôn Ngữ</h5>
+               
+                <!-- Nút chọn ngôn ngữ -->
+                <div class="d-flex justify-content-center justify-content-md-start">
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill me-2">English</button>
+                    <button class="btn btn-success btn-sm rounded-pill">Vietnamese</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dòng bản quyền -->
+        <div class="text-center mt-5 pt-4 border-top border-gray-700">
+            <p class="text-gray-400 mb-0"> © 2025 MOVIE STREAMING - KTPM2211061</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

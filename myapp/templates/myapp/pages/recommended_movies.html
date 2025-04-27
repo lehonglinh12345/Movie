@@ -1,0 +1,31 @@
+
+{% load static %}
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <h1 class="text-center mb-5">{{ message }}</h1>
+        <div class="row g-4">
+            {% for movie in recommended_movies %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    {% if movie.anh_bia %}
+                    <img src="{{ movie.anh_bia.url }}" class="card-img-top" alt="{{ movie.ten_phim }}">
+                    {% else %}
+                    <img src="{% static 'images/placeholder.jpg' %}" class="card-img-top" alt="Placeholder">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.ten_phim }}</h5>
+                        <p class="card-text text-muted">{{ movie.mo_ta|truncatewords:15 }}</p>
+                        <a href="{% url 'movie_detail' movie.id %}" class="btn btn-outline-danger">Xem ngay</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">Chưa có gợi ý. Hãy đánh giá thêm phim nhé!</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<link rel="stylesheet" href="{% static 'css/recommend.css' %}">
+{% endblock %}
